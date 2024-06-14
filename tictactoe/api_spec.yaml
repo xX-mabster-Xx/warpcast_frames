@@ -1,0 +1,56 @@
+openapi: 3.0.0
+info:
+  title: Sample API
+  version: 1.0.0
+servers:
+- url: https://d5dpp5ri7kobehnatge0.apigw.yandexcloud.net
+paths:
+  /:
+    get:
+      x-yc-apigateway-integration:
+        type: dummy
+        content:
+          '*': Hello, World!
+        http_code: 200
+        http_headers:
+          Content-Type: text/plain
+  /warpcast:
+    get:
+      parameters:
+        - in: query
+          name: board
+          schema:
+            type: string
+          required: false
+          description: board
+      x-yc-apigateway-integration:
+        type: cloud_functions
+        function_id: d4ekj2nca6tsj313v0r6
+        tag: "$latest"
+    post:
+      x-yc-apigateway-integration:
+        type: cloud_functions
+        function_id: d4ekj2nca6tsj313v0r6
+        tag: "$latest"
+  /tictactoe:
+    get:
+      summary: generate tictactoe image
+      description: returns image of tictactoe board
+      parameters:
+        - in: query
+          name: board
+          schema:
+            type: string
+          required: true
+          description: board
+        - in: query
+          name: q
+          schema:
+            type: string
+          required: false
+          description: win or draw image
+      x-yc-apigateway-integration:
+        type: cloud_functions
+        function_id: d4epn4efilfir43koe9h
+        tag: "$latest"
+
